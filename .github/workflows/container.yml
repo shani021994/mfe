@@ -16,14 +16,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - run: npm install
-      - run: npm run build
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - uses: chrislennon/action-aws-cli@v1.1
-      - run: aws ecr get-login-password --region us-east-1 
+      - name: Install dependencies
+        run: npm install
 
+      - name: Build project
+        run: npm run build
 
-      
+      - name: Configure AWS CLI
+        uses: chrislennon/action-aws-cli@v1.1
 
-       
+      - name: Login to AWS ECR
+        run: aws ecr get-login-password --region us-east-1
